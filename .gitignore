@@ -1,0 +1,13 @@
+src/.deps/
+compile
+autom4te.cache/
+data/
+help/
+m4/*.m4
+src/*.o
+po/
+Makefile
+*.in
+*.log
+*.exe
+*.page

@@ -1,6 +1,6 @@
 # ZenityMs
 
-This is an Windows supported version of Zenity, which is a open source command-line utility that enables shell scripts and other programs to display GTK+ graphical dialog boxes and interact with the user.
+This is a Windows supported version of Zenity, which is a open source command-line utility enabling shell scripts and other programs to display GTK+ graphical dialog boxes to interact with the user.
 
 
 ## Zenity command examples
@@ -10,6 +10,7 @@ zenity --verison
 zenity --info --text="Your test info message here"
 zenity --progress --title="processing data" --text="please wait while working..." --pulsate --auto-kill
 zenity --entry --title="user input" --text="please enter you name:"
+zenity --list --title="fruit selection" --text="choose your favorite fruit:" --column="Fruits" "Apple" "Banana" "Orange"
 ```
 
 ## Building

@@ -20,8 +20,10 @@ autoreconf -f -i
 make
 
 echo creating dist folder and copying files
-mkdir -p ./dist/bin
-ldd ./src/zenity.exe | grep mingw64 | awk '{print $3}' | xargs -I {} cp {} ./dist/bin
-cp -v ./src/zenity.exe ./dist/bin
-cp -v src/zenity.ui ./dist/bin
-cp -v src/gdialog ./dist/bin
+mkdir -p ./dist/zenityMs/bin
+mkdir -p ./dist/zenityMs/ui
+ldd ./src/zenity.exe | grep mingw64 | awk '{print $3}' | xargs -I {} cp {} ./dist/zenityMs/bin
+cp -v ./src/zenity.exe ./dist/zenityMs/bin
+cp -v src/zenity.ui ./dist/zenityMs/ui
+cp -v src/gdialog ./dist/zenityMs/bin
+pushd "./dist/" && /c/msys64/usr/bin/zip -r zenity.zip zenityMs && popd
