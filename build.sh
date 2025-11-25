@@ -6,9 +6,12 @@
 prj_name=zenity
 current_dir=$(dirname "$(realpath "$0")" )
 
+echo "Building $prj_name from $current_dir ..."
 cd "$current_dir"
 
-# g++ -o zenity.exe main.c -lgdi32 -mwindows
+msys_include=$(cygpath -m /usr/include)
+msys_lib=$(cygpath -m /usr/lib)
+echo "Found include path: $msys_include, lib path: $msys_lib"
 
 echo dependencies can be installed in msys2 with: 
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-toolchain base-devel mingw-w64-ucrt-x86_64-ntldd
@@ -17,8 +20,13 @@ echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x8
 # pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-adwaita-icon-theme
 
 make clean
+
+#fix issues with windows new line characters breaking the configure.ac list
+#sed -i 's/\r$//' configure.ac
+
 autoreconf -fiv
-./configure --prefix= --disable-nls CPPFLAGS="-Ic:/msys64/usr/include" LDFLAGS="-Lc:/msys64/usr/lib"
+./configure --prefix= --disable-nls CPPFLAGS="-I$msys_include" LDFLAGS="-L$msys_lib"
+#./configure --prefix= --disable-nls CPPFLAGS="-I${MINGW_PREFIX}/include" LDFLAGS="-L${MINGW_PREFIX}/lib"
 make || exit 1 # If 'make' fails, exit with status 1.
 
 echo "Cleaning previous build..."
@@ -67,3 +75,4 @@ cp -v "/ucrt64/share/glib-2.0/schemas/gschemas.compiled" "./dist/zenityMs/share/
 
 echo "Zipping up the build..."
 pushd "./dist/" && zip -r zenity.zip zenityMs && popd
+ls -lh ./dist/zenity.zip
