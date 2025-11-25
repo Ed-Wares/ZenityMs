@@ -384,7 +384,7 @@ zenity_progress_dialog_response (GtkWidget *widget, int response, gpointer data)
          -- Monday 27, March 2006
       */
       if (autokill) {
-        kill (getppid (), 1);
+        //kill (getppid (), 1);
       }
       zen_data->exit_code = zenity_util_return_exit_code (ZENITY_CANCEL);
       break;

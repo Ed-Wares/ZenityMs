@@ -1769,7 +1769,7 @@ zenity_calendar_post_callback (GOptionContext *context,
     if (zenity_calendar_date_format)
       results->calendar_data->date_format = zenity_calendar_date_format;
     else
-      results->calendar_data->date_format = g_locale_to_utf8 (nl_langinfo (D_FMT), -1, NULL, NULL, NULL);
+      results->calendar_data->date_format = zenity_calendar_date_format; //results->calendar_data->date_format = g_locale_to_utf8 (nl_langinfo (D_FMT), -1, NULL, NULL, NULL);
 
   } else {
     if (zenity_calendar_day > -1)
@@ -2192,7 +2192,7 @@ zenity_forms_post_callback (GOptionContext *context,
     if (zenity_forms_date_format)
       results->forms_data->date_format = zenity_forms_date_format;
     else
-      results->forms_data->date_format = g_locale_to_utf8 (nl_langinfo (D_FMT), -1, NULL, NULL, NULL);
+      results->forms_data->date_format = zenity_forms_date_format; // g_locale_to_utf8 (nl_langinfo (D_FMT), -1, NULL, NULL, NULL);
   } else {
     if (zenity_forms_date_format)
       zenity_option_error (zenity_option_get_name (forms_dialog_options, &zenity_forms_date_format),

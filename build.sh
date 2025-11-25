@@ -1,10 +1,12 @@
 #!/bin/bash
+
+# Script to rebuild the EXE binary
+# You can run it from a msys2 terminal
+
 prj_name=zenity
 current_dir=$(dirname "$(realpath "$0")" )
 
 cd "$current_dir"
-# Script to rebuild the EXE binary
-# You can run it from a msys2 terminal
 
 # g++ -o zenity.exe main.c -lgdi32 -mwindows
 
@@ -14,7 +16,7 @@ echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gnome-common git make 
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-itstool mingw-w64-ucrt-x86_64-gettext msys2-runtime-devel
 
 autoreconf -f -i
-./configure --prefix= --disable-nls
+./configure --prefix= --disable-nls CPPFLAGS="-Ic:/msys64/usr/include" LDFLAGS="-Lc:/msys64/usr/lib"
 make
 
 mkdir -p "$current_dir"/dist/bin

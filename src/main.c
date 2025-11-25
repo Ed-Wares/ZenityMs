@@ -44,7 +44,10 @@ main (gint argc, gchar **argv) {
 #endif
 
   bindtextdomain(GETTEXT_PACKAGE, GNOMELOCALEDIR);
-  bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+  //bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+  #ifdef ENABLE_NLS
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+  #endif
   textdomain(GETTEXT_PACKAGE);
 
   gtk_init (&argc, &argv);

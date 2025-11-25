@@ -138,7 +138,7 @@ zenity_util_fill_file_buffer (GtkTextBuffer *buffer, const gchar *filename)
   f = fopen (filename, "r");
 
   if (f == NULL) {
-    g_warning ("Cannot open file '%s': %s", filename, g_strerror (errno));
+    g_warning ("Cannot open file '%s': %s", filename, g_strerror (0));
     return FALSE;
   }
 
