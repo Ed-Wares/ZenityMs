@@ -15,9 +15,11 @@ echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-toolchain base-devel m
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gnome-common git make automake autoconf libtool yelp-tools zip
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-itstool mingw-w64-ucrt-x86_64-gettext msys2-runtime-devel
 # pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-adwaita-icon-theme
-autoreconf -f -i
+
+make clean
+autoreconf -fiv
 ./configure --prefix= --disable-nls CPPFLAGS="-Ic:/msys64/usr/include" LDFLAGS="-Lc:/msys64/usr/lib"
-make
+make || exit 1 # If 'make' fails, exit with status 1.
 
 echo "Cleaning previous build..."
 rm -rf ./dist/zenityMs
@@ -36,7 +38,7 @@ cp -v src/zenity.ui ./dist/zenityMs/ui
 cp -v src/gdialog ./dist/zenityMs/bin/
 cp -v zenity.bat ./dist/zenityMs
 cp -v zenityTest.bat ./dist/zenityMs
-cp -v LICENSE ./dist/zenityMs
+cp -v COPYING ./dist/zenityMs
 
 echo "Copying icons..."
 mkdir -p "./dist/zenityMs/share/icons"
