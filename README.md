@@ -6,7 +6,7 @@ This is a Windows supported version of Zenity, which is a open source command-li
 ## Zenity command examples
 
 ```
-zenity --verison
+zenity --version
 zenity --info --text="Your test info message here"
 zenity --progress --title="processing data" --text="please wait while working..." --pulsate --auto-kill
 zenity --entry --title="user input" --text="please enter you name:"
