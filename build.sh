@@ -12,7 +12,7 @@ cd "$current_dir"
 
 echo dependencies can be installed in msys2 with: 
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-toolchain base-devel mingw-w64-ucrt-x86_64-ntldd
-echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gnome-common git make automake autoconf libtool yelp-tools
+echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gnome-common git make automake autoconf libtool yelp-tools zip
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-itstool mingw-w64-ucrt-x86_64-gettext msys2-runtime-devel
 # pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-adwaita-icon-theme
 autoreconf -f -i
@@ -64,4 +64,4 @@ mkdir -p "./dist/zenityMs/share/glib-2.0/schemas"
 cp -v "/ucrt64/share/glib-2.0/schemas/gschemas.compiled" "./dist/zenityMs/share/glib-2.0/schemas/"
 
 echo "Zipping up the build..."
-pushd "./dist/" && /c/msys64/usr/bin/zip -r zenity.zip zenityMs && popd
+pushd "./dist/" && zip -r zenity.zip zenityMs && popd
