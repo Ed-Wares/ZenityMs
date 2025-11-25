@@ -11,3 +11,4 @@ Makefile
 *.log
 *.exe
 *.page
+dist/
