@@ -19,7 +19,9 @@ autoreconf -f -i
 ./configure --prefix= --disable-nls CPPFLAGS="-Ic:/msys64/usr/include" LDFLAGS="-Lc:/msys64/usr/lib"
 make
 
-mkdir -p "$current_dir"/dist/bin
-ldd "$current_dir"/src/"$prj_name".exe | grep mingw64 | awk '{print $3}' | xargs -I {} cp {} "$current_dir"/dist/bin
-cp -v "$current_dir"/src/"$prj_name".exe "$current_dir"/dist/bin
-cp -v src/gdialog "$current_dir"/dist/bin
+echo creating dist folder and copying files
+mkdir -p ./dist/bin
+ldd ./src/zenity.exe | grep mingw64 | awk '{print $3}' | xargs -I {} cp {} ./dist/bin
+cp -v ./src/zenity.exe ./dist/bin
+cp -v src/zenity.ui ./dist/bin
+cp -v src/gdialog ./dist/bin

@@ -88,11 +88,23 @@ zenity_util_load_ui_file (const gchar *root_widget, ...)
 						objects, NULL);
   }
 
+  const gchar *app_path = g_win32_get_package_installation_directory_of_module (NULL);
+  if (result == 0 && app_path != NULL) {
+    //gchar *path = g_build_filename (app_path, ZENITY_UI_FILE_RELATIVEPATH, NULL);
+    static char pathBuf[2048];  // 2048 is the maximum length of a path
+    snprintf(pathBuf, sizeof(pathBuf), "%s/ui/%s", app_path, ZENITY_UI_FILE_RELATIVEPATH);
+    if (g_file_test (pathBuf, G_FILE_TEST_EXISTS)) {
+      result = gtk_builder_add_objects_from_file (builder, pathBuf, objects, NULL);
+    } else {
+      g_warning ("Could not find ui file %s", pathBuf);
+    }
+  }
+
   if (result == 0)
     result = gtk_builder_add_objects_from_file (builder,
     						ZENITY_UI_FILE_FULLPATH,
 						objects, &error);
-
+  
   g_strfreev (objects);
 
   if (result == 0) {
