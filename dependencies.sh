@@ -155,10 +155,42 @@ echo -e "✅ FOUND DEPENDENCIES (Total: $TOTAL_JOBS)"
 echo -e "   Total Time: $ELAPSED"
 echo "============================================================"
 
-# Sort and display results
+# Sort and group results
 if [ -f .results.txt ]; then
-    sort .results.txt
-    rm .results.txt
+    # Separate system and application DLLs
+    > .system_dlls.txt
+    > .app_dlls.txt
+    > app_dependencies.txt
+    
+    while IFS= read -r line; do
+        # Extract path from line (between -> and [)
+        path=$(echo "$line" | sed 's/.*-> \(.*\) \[.*/\1/')
+        unix_path=$(cygpath -u "$path" 2>/dev/null)
+        
+        if echo "$unix_path" | grep -qiE "^/c/windows|^/c/winnt"; then
+            echo "$line" >> .system_dlls.txt
+        else
+            echo "$line" >> .app_dlls.txt
+            echo "$path" >> app_dependencies.txt
+        fi
+    done < .results.txt
+    
+    echo -e "\n${BLUE}Windows System DLLs:${NC}"
+    if [ -s .system_dlls.txt ]; then
+        sort .system_dlls.txt
+    else
+        echo "None found."
+    fi
+    
+    echo -e "\n${BLUE}Application Specific DLLs (app_dependencies.txt):${NC}"
+    if [ -s .app_dlls.txt ]; then
+        sort .app_dlls.txt
+    else
+        echo "None found."
+    fi
+    
+    # Clean up temp files
+    rm .results.txt .system_dlls.txt .app_dlls.txt
 else
     echo "No dependencies found."
 fi

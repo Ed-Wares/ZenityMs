@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to rebuild the EXE binary
+# Script to rebuild the EXE binary and creates a distributable zip file
 # You can run it from a msys2 terminal
 
 prj_name=zenity
@@ -46,7 +46,30 @@ cp -v src/zenity.ui ./dist/zenityMs/ui
 cp -v src/gdialog ./dist/zenityMs/bin/
 cp -v zenity.bat ./dist/zenityMs
 cp -v zenityTest.bat ./dist/zenityMs
+cp -v zenityDebug.bat ./dist/zenityMs
 cp -v COPYING ./dist/zenityMs
+
+echo "Copying gdb and dependencies"
+mkdir -p "./dist/zenityMs/gdb"
+cp -v /ucrt64/bin/gdb.exe ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libexpat-1.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libtermcap-0.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libmpfr-6.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libwinpthread-1.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libxxhash.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libreadline8.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/zlib1.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libpython3.12.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libgcc_s_seh-1.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libiconv-2.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libstdc++-6.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libgmp-10.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/liblzma-5.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libintl-8.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libncursesw6.dll ./dist/zenityMs/gdb/
+cp -v /ucrt64/bin/libzstd.dll ./dist/zenityMs/gdb/
+cp -v dependencies.sh ./dist/zenityMs/gdb/
+cp -v dependencies.bat ./dist/zenityMs/gdb/
 
 echo "Copying icons..."
 mkdir -p "./dist/zenityMs/share/icons"
@@ -76,3 +99,9 @@ cp -v "/ucrt64/share/glib-2.0/schemas/gschemas.compiled" "./dist/zenityMs/share/
 echo "Zipping up the build..."
 pushd "./dist/" && zip -r zenity.zip zenityMs && popd
 ls -lh ./dist/zenity.zip
+
+echo "Verifying the build..."
+objdump -h ./dist/zenityMs/bin/zenity.exe | grep debug
+ls -lh ./dist/zenityMs/bin/zenity.exe
+
+echo "Build complete!"
