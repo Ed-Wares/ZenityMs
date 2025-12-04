@@ -6,6 +6,10 @@ cd "%current_dir%"
 
 SET "zenity=bin\zenity"
 
+REM If there is an issue with GTK, then enabling the two variables below can help output more info
+REM set G_MESSAGES_DEBUG=all
+REM set GTK_DEBUG=interactive
+
 echo running: %zenity% --version
 %zenity% --version
 

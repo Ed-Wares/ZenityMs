@@ -18,6 +18,8 @@ echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-toolchain base-devel m
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gnome-common git make automake autoconf libtool yelp-tools zip
 echo pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-itstool mingw-w64-ucrt-x86_64-gettext msys2-runtime-devel
 # pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-adwaita-icon-theme
+# pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-meson mingw-w64-ucrt-x86_64-ninja
+# pacman -S --needed --noconfirm mingw-w64-ucrt-x86_64-lzo
 
 make clean
 
@@ -95,6 +97,23 @@ cp -v "/ucrt64/bin/gspawn-"*"-helper-console.exe" "./dist/zenityMs/bin/"
 echo "Copying GLib Schemas..."
 mkdir -p "./dist/zenityMs/share/glib-2.0/schemas"
 cp -v "/ucrt64/share/glib-2.0/schemas/gschemas.compiled" "./dist/zenityMs/share/glib-2.0/schemas/"
+
+# Force software acceleration to be used in cairo/pango
+./build_cairo.sh
+mkdir -p "./dist/zenityMs/bin/d2"
+#backup original hardware acceleration dlls into d2 
+cp -v "./dist/zenityMs/bin/libcairo-2.dll" "./dist/zenityMs/bin/d2/"
+cp -v "./dist/zenityMs/bin/libpangocairo-1.0-0.dll" "./dist/zenityMs/bin/d2/"
+cp -v "./dist/zenityMs/bin/libpango-1.0-0.dll" "./dist/zenityMs/bin/d2/"
+cp -v "./dist/zenityMs/bin/libpangowin32-1.0-0.dll" "./dist/zenityMs/bin/d2/"
+#cp -v "./dist/zenityMs/bin/libpangoft2-1.0-0.dll" "./dist/zenityMs/bin/d2/"
+echo "Replacing hardware acceleration dlls with software acceleration"
+cp -v "./cairo_build/dist/bin/libcairo-2.dll" "./dist/zenityMs/bin/" new dlls
+cp -v "./cairo_build/dist/bin/libcairo-2.dll" "./dist/zenityMs/bin/"
+cp -v "./pango_build/dist/bin/libpangocairo-1.0-0.dll" "./dist/zenityMs/bin/"
+cp -v "./pango_build/dist/bin/libpango-1.0-0.dll" "./dist/zenityMs/bin/"
+cp -v "./pango_build/dist/bin/libpangowin32-1.0-0.dll" "./dist/zenityMs/bin/"
+#cp -v "./pango_build/dist/bin/libpangoft2-1.0-0.dll" "./dist/zenityMs/bin/"
 
 echo "Zipping up the build..."
 pushd "./dist/" && zip -r zenity.zip zenityMs && popd

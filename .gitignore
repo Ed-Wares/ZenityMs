@@ -12,3 +12,5 @@ Makefile
 *.exe
 *.page
 dist/
+cairo_build/
+pango_build/

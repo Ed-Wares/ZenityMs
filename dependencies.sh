@@ -159,7 +159,7 @@ echo "============================================================"
 if [ -f .results.txt ]; then
     # Separate system and application DLLs
     > .system_dlls.txt
-    > .app_dlls.txt
+    > app_dll_versions.txt
     > app_dependencies.txt
     
     while IFS= read -r line; do
@@ -170,7 +170,7 @@ if [ -f .results.txt ]; then
         if echo "$unix_path" | grep -qiE "^/c/windows|^/c/winnt"; then
             echo "$line" >> .system_dlls.txt
         else
-            echo "$line" >> .app_dlls.txt
+            echo "$line" >> app_dll_versions.txt
             echo "$path" >> app_dependencies.txt
         fi
     done < .results.txt
@@ -183,14 +183,14 @@ if [ -f .results.txt ]; then
     fi
     
     echo -e "\n${BLUE}Application Specific DLLs (app_dependencies.txt):${NC}"
-    if [ -s .app_dlls.txt ]; then
-        sort .app_dlls.txt
+    if [ -s app_dll_versions.txt ]; then
+        sort app_dll_versions.txt
     else
         echo "None found."
     fi
     
     # Clean up temp files
-    rm .results.txt .system_dlls.txt .app_dlls.txt
+    rm .results.txt .system_dlls.txt
 else
     echo "No dependencies found."
 fi
