@@ -42,7 +42,7 @@ jobs:
         msystem: UCRT64 # Or MINGW64, MINGW32, etc. depending on your target
         update: true
         cache: true # Enable the built-in package cache
-        install: git zip mingw-w64-ucrt-x86_64-toolchain base-devel mingw-w64-ucrt-x86_64-ntldd mingw-w64-ucrt-x86_64-gnome-common git make automake autoconf libtool yelp-tools mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-itstool mingw-w64-ucrt-x86_64-gettext msys2-runtime-devel
+        install: git zip mingw-w64-ucrt-x86_64-toolchain base-devel mingw-w64-ucrt-x86_64-ntldd mingw-w64-ucrt-x86_64-gnome-common git make automake autoconf libtool yelp-tools mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-itstool mingw-w64-ucrt-x86_64-gettext msys2-runtime-devel mingw-w64-ucrt-x86_64-meson mingw-w64-ucrt-x86_64-ninja
 
     - name: Run Bash Script
       run: |
