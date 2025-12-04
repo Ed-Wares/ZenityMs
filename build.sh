@@ -108,7 +108,6 @@ cp -v "./dist/zenityMs/bin/libpango-1.0-0.dll" "./dist/zenityMs/bin/d2/"
 cp -v "./dist/zenityMs/bin/libpangowin32-1.0-0.dll" "./dist/zenityMs/bin/d2/"
 #cp -v "./dist/zenityMs/bin/libpangoft2-1.0-0.dll" "./dist/zenityMs/bin/d2/"
 echo "Replacing hardware acceleration dlls with software acceleration"
-cp -v "./cairo_build/dist/bin/libcairo-2.dll" "./dist/zenityMs/bin/" new dlls
 cp -v "./cairo_build/dist/bin/libcairo-2.dll" "./dist/zenityMs/bin/"
 cp -v "./pango_build/dist/bin/libpangocairo-1.0-0.dll" "./dist/zenityMs/bin/"
 cp -v "./pango_build/dist/bin/libpango-1.0-0.dll" "./dist/zenityMs/bin/"
