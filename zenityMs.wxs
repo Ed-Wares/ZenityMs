@@ -1,0 +1,67 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui"> <Package Name="ZenityMs" 
+             Manufacturer="EdWares" 
+             Version="1.0.5" 
+             Scope="perMachine" 
+             Compressed="yes"
+             UpgradeCode="4c54f5fa-2c1e-43f4-8585-5e4f64acf85e"> <!-- powershell "[guid]::NewGuid()" -->
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+        <MediaTemplate EmbedCab="yes" />
+
+        <Icon Id="AppIcon" SourceFile="dist/ZenityMs/zenity.ico" />
+        <Property Id="ARPPRODUCTICON" Value="AppIcon" />
+
+        <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+        
+        <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="Installation Complete! You can now run ZenityMs from your Start Menu." />
+
+        <StandardDirectory Id="ProgramFiles64Folder">
+            <Directory Id="INSTALLFOLDER" Name="ZenityMs" />
+        </StandardDirectory>
+
+        <!-- Create Start Menu folder -->
+        <StandardDirectory Id="ProgramMenuFolder">
+            <Directory Id="ApplicationProgramsFolder" Name="ZenityMs" />
+        </StandardDirectory>
+
+        <!-- Add Application shortcut -->
+        <ComponentGroup Id="ShortcutComponents" Directory="ApplicationProgramsFolder">
+            <Component Id="ApplicationShortcut" Guid="*">
+                <Shortcut Id="StartMenuShortcut" 
+                          Name="Zenity Test" 
+                          Description="Run Zenity Tests"
+                          Target="[INSTALLFOLDER]zenityTest.bat"
+                          WorkingDirectory="INSTALLFOLDER"
+                          Icon="AppIcon" />
+                
+                <RemoveFolder Id="CleanUpShortCut" On="uninstall" />
+                
+                <RegistryValue Root="HKCU" Key="Software\EdWares\ZenityMs" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+            </Component>
+        </ComponentGroup>
+
+        <!-- Add INSTALLFOLDER to system PATH -->
+        <ComponentGroup Id="PathComponents" Directory="INSTALLFOLDER">
+            <Component Id="PathEnvComponent" Guid="6C248016-5636-407C-8A19-980756781234">
+                <Environment Id="UpdatePath" 
+                             Name="PATH" 
+                             Value="[INSTALLFOLDER]" 
+                             Action="set" 
+                             Part="last" 
+                             System="yes" />
+                
+                <RegistryValue Root="HKLM" Key="Software\EdWares\ZenityMs" Name="PathSet" Type="integer" Value="1" KeyPath="yes" />
+            </Component>
+        </ComponentGroup>
+
+        <Feature Id="ProductFeature" Title="ZenityMs" Level="1">
+            <ComponentGroupRef Id="PublishedComponents" />
+            <ComponentGroupRef Id="ShortcutComponents" />
+            <ComponentGroupRef Id="PathComponents" />
+        </Feature>
+
+        <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+
+    </Package>
+</Wix>

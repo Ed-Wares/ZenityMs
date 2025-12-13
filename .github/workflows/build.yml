@@ -44,6 +44,11 @@ jobs:
         cache: true # Enable the built-in package cache
         install: git zip mingw-w64-ucrt-x86_64-toolchain base-devel mingw-w64-ucrt-x86_64-ntldd mingw-w64-ucrt-x86_64-gnome-common git make automake autoconf libtool yelp-tools mingw-w64-ucrt-x86_64-gtk3 mingw-w64-ucrt-x86_64-itstool mingw-w64-ucrt-x86_64-gettext msys2-runtime-devel mingw-w64-ucrt-x86_64-meson mingw-w64-ucrt-x86_64-ninja
 
+    - name: Setup .NET 8 # This step installs the .NET 8 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x' # Installs the latest patch of .NET 8
+        
     - name: Run Bash Script
       run: |
         echo "Running build.sh..."
@@ -55,6 +60,8 @@ jobs:
       id: upload-artifact
       with:
         name: build-binary-${{ inputs.version_string }}
-        path: ./dist/*.zip # Upload the generated ZIP file
+        path: |
+          ./dist/*.zip
+          ./dist/*.msi
         retention-days: 1
 

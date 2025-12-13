@@ -50,6 +50,8 @@ cp -v zenity.bat ./dist/zenityMs
 cp -v zenityTest.bat ./dist/zenityMs
 cp -v zenityDebug.bat ./dist/zenityMs
 cp -v COPYING ./dist/zenityMs
+cp -v zenity.ico ./dist/zenityMs/
+
 
 echo "Copying gdb and dependencies"
 mkdir -p "./dist/zenityMs/gdb"
@@ -121,5 +123,8 @@ ls -lh ./dist/zenity.zip
 echo "Verifying the build..."
 objdump -h ./dist/zenityMs/bin/zenity.exe | grep debug
 ls -lh ./dist/zenityMs/bin/zenity.exe
+
+# run MSI build script
+./build_msi.sh
 
 echo "Build complete!"

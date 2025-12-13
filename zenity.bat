@@ -37,11 +37,11 @@ IF "%~1" == "" (
     rem Execute the 'zenity --version' command and store its output in the 'ver' variable
     FOR /F "tokens=* usebackq" %%i IN (`"%zenity%" --version`) DO (
         SET "ver=%%i"
-        echo "ver: !ver!"
-        echo "running: %zenity% --info --text=Zenity version !ver! ..."
-        %zenity% --info --no-wrap --text="Zenity version !ver! \n !zen_usage!"
+        echo ver: !ver!
+        echo running: "%zenity%" --info --text=Zenity version !ver! ...
+        "%zenity%" --info --no-wrap --text="Zenity version !ver! \n !zen_usage!"
     )
  ) ELSE (
-    echo "running: %zenity% %*"
-    %zenity% %*
+    echo running: "%zenity%" %*
+    "%zenity%" %*
 )
